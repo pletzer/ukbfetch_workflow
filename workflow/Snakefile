@@ -1,0 +1,30 @@
+
+rule bwa_map:
+    input:
+        "../inputs/in1.txt"
+    output:
+        "../results/out1.txt"
+    # shell:
+    #     "cp {input} {output}"
+    run:
+        import random
+        random.seed(123)
+        fail_ratio = 0.3
+        fin = open(input[0])
+        fout = open(output[0], 'w')
+        for line in fin.readlines():
+
+            # randomly fail
+            if random.random() >= fail_ratio: 
+                fout.write(line + '\n')
+
+        fout.close()
+        fin.close()
+
+
+
+
+
+        
+
+        
