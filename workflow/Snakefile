@@ -11,8 +11,8 @@ rule download:
         fail_ratio = 0.3
 
         def read_input(filename: Path):
-            """Read input of file
-            :returns a list of patient, scan entries
+            """Read input file
+            :returns a list of patients, scan types
             """
             f = open(filename)
             outlist = [line for line in f.readlines()]

@@ -1,0 +1,31 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ukb"
+description = "Simulates data download from ukbank"
+authors = [
+    { name = "Alex Pletzer", email = "alexander.pletzer@nesi.org.nz" }
+]
+dependencies = [
+    "defopt",
+    "Snakemake",
+]
+version = "0.1.0"
+
+[project.optional-dependencies]
+dev = [
+    "ruff",
+    "pdbpp",
+    "pyinstrument",
+    "pytest"
+]
+
+[project.scripts]
+ukbfetch = "ukb.ukb:main"
+
+[tool.ruff]
+select = ["E", "F"]
+ignore = ["E203"]
+extend-exclude = [".ipynb_checkpoints"]
