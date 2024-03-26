@@ -1,45 +1,18 @@
+
+
 rule download:
     input:
         "../inputs/in1.txt",
     output:
+        "../results/out1.txt",
         "../results/success1.txt"
-    run:
-        from pathlib import Path
-        # to simulate the randomness when downloading data
-        import random
-        random.seed(123)
-        fail_ratio = 0.3
+    shell:
+        """
+        # ukbmanage recursively pretends to download the data
+        # until all the downloads are sucessful
+        ukbmanage -i $PWD/{input[0]} -o $PWD/{output[0]} -f 0.7 -s 123
 
-        def read_input(filename: Path):
-            """Read input file
-            :returns a list of patients, scan types
-            """
-            f = open(filename)
-            outlist = [line for line in f.readlines()]
-            f.close()
-            return outlist
-        
-        def download(inlist: list):
-            """Emulate the download operation
-            :param inlist: list of patient, scan entries
-            :returns a list of patient, scan entries for which the download failed
-            """
-            badlist = []
-            for line in inlist:
-                # randomly fail
-                if random.random() < fail_ratio:
-                    print(f'Warning: {line} failed!')
-                    badlist.append(line)
-
-            # outlist is empty if all downloads succeeded
-            return badlist
-
-        todolist = read_input(input[0])
-        while todolist:
-            # download until todolist is empty
-            todolist = download(todolist)
-
-        # done, write an empty file to signal 
-        # that all downloads were successful
-        f = open(output[0], 'w')
-        f.close()
+        # at this point all the files should have been downloaded 
+        # successfully. Mark success by creating a flag file. 
+        touch $PWD/{output[1]}
+        """

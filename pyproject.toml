@@ -9,8 +9,8 @@ authors = [
     { name = "Alex Pletzer", email = "alexander.pletzer@nesi.org.nz" }
 ]
 dependencies = [
-    "defopt",
     "Snakemake",
+    "setuptools",
 ]
 version = "0.1.0"
 
@@ -23,7 +23,7 @@ dev = [
 ]
 
 [project.scripts]
-ukbfetch = "ukb.ukb:main"
+ukbmanage = "ukb.ukb:main"
 
 [tool.ruff]
 select = ["E", "F"]

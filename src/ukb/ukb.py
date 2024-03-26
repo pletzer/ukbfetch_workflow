@@ -25,6 +25,7 @@ def download(input_file: Path, output_file: Path, fail_ratio: float, seed: int) 
 def download_until_success(input_file: Path='', output_file: Path='', 
                            fail_ratio: float=0.3, seed: int=123) -> None:
     
+    
     # perform the download in a temporary directory
     with tempfile.TemporaryDirectory() as tmpdirname:
         os.chdir(tmpdirname)
@@ -48,16 +49,25 @@ def download_until_success(input_file: Path='', output_file: Path='',
             
             iteration += 1
         
+        # copy the output back
+        shutil.copyfile(tmp_output_file, output_file)
+    
             
-def main():
+def main() -> int:
     parser = argparse.ArgumentParser()
-    parser.add_argument('-i', '--input', default='', help='Specify the input file')
-    parser.add_argument('-o', '--output', default='', help='Specify the output file')
-    parser.add_argument('-f', '--fail', default=0.3, type=float, help='Specify the ratio of failures')
-    parser.add_argument('-s', '--seed', default=123, type=int, help='Specify the random seed')
+    parser.add_argument('-i', '--input', default='', 
+                        help='Specify the absolute path to the input file')
+    parser.add_argument('-o', '--output', default='', 
+                        help='Specify the absolute path to the output file')
+    parser.add_argument('-f', '--fail', default=0.3, type=float,
+                        help='Specify the ratio of failures')
+    parser.add_argument('-s', '--seed', default=123, type=int,
+                        help='Specify the random seed')
     args = parser.parse_args()
 
     download_until_success(args.input, args.output, args.fail, args.seed)
+    
+    return 0
     
 if __name__ == '__main__':
     main()
